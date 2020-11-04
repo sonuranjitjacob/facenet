@@ -40,6 +40,8 @@ from tensorflow.python.ops import data_flow_ops
 from sklearn import metrics
 from scipy.optimize import brentq
 from scipy import interpolate
+import matplotlib.pyplot as plt
+
 
 def main(args):
   
@@ -48,7 +50,7 @@ def main(args):
         with tf.Session() as sess:
             
             # Read the file containing the pairs used for testing
-            pairs = lfw.read_pairs(os.path.expanduser(args.lfw_pairs))
+            pairs = lfw.read_pairs("C:/Users/sonur/Downloads/Bio/facenet-master/data/pairs.txt")
 
             # Get the paths for the corresponding images
             paths, actual_issame = lfw.get_paths(os.path.expanduser(args.lfw_dir), pairs)
@@ -134,6 +136,18 @@ def evaluate(sess, enqueue_op, image_paths_placeholder, labels_placeholder, phas
     print('Area Under Curve (AUC): %1.3f' % auc)
     eer = brentq(lambda x: 1. - x - interpolate.interp1d(fpr, tpr)(x), 0., 1.)
     print('Equal Error Rate (EER): %1.3f' % eer)
+
+    plt.title('Receiver Operating Characteristic')
+    plt.plot(fpr, tpr, 'b', label = 'AUC = %0.5f' % auc)
+    plt.legend(loc = 'lower right')
+    plt.plot([0, 1], [0, 1],'r--')
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.ylabel('True Positive Rate')
+    plt.xlabel('False Positive Rate')
+    plt.show()
+
+
     
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
