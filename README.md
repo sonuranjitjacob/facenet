@@ -1,4 +1,4 @@
-# Face Recognition using Tensorflow 
+# Face Recognition using Tensorflow - Windows version
 
 This is a repo forked from http://travis-ci.org/davidsandberg/facenet.  
 I have modified the python commands for the Tensorflow implementation to be compatible with Windows. You can see the changes by comparing my repo with the original repo.   
